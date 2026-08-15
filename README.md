@@ -4,7 +4,7 @@ WAF4-Builder is the official builder utility for the **WAF4** tool. It provides 
 
 The builder allows you to configure deployment-related values and generate the required build files without manually modifying the source files.
 
-> **Latest version:** Check the repository's **Releases** section to download the latest version of WAF4-Builder.
+> **Latest version:** Check the repository's [**Releases**](https://github.com/PowerPizza/WAF4-Builder-Public/releases) section to download the latest version of WAF4-Builder.
 
 # How to Use
 
@@ -161,4 +161,4 @@ directory located within the WAF4-Builder directory.
 
 The exact files generated may vary depending on the selected configuration and the WAF4-Builder version.
 
-See the [Deployment Documentation]() for information about deploying and using the generated files.
+See the [Deployment Documentation](https://github.com/PowerPizza/Wireless-ALT-F4-public/tree/master#wireless-alt-f4) for information about deploying and using the generated files.
