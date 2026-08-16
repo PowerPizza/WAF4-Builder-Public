@@ -31,13 +31,13 @@ Run:
 waf4-builder-gui.exe
 ```
 
-Fill in the required fields and click **Generate** to create the build.
+Fill in the required fields and click **Execute Builder** to create the build.
 
 > **Note:** The available prompts, options, and behavior of the CLI/GUI may change between WAF4-Builder versions. Always check the **release notes** for the version you are using.
 
 # Configuration Reference
 
-Whether you use the CLI or GUI, WAF4-Builder will ask you to provide several configuration values during the build process.
+Whether you use the CLI or GUI, WAF4-Builder will ask you to provide several configuration values before the build process begins.
 
 The following sections explain each configuration option and when it should be used.
 
@@ -47,63 +47,29 @@ The generated payload must be hosted at a location that the WAF4 software can ac
 
 Set this value to the **direct, publicly accessible URL** of the hosted payload file.
 
-**Example:**
-
-```text
-https://example.com/files/payload.exe
-```
-
 ## `UPDATOR_HOST_URL`
 
 The updater script must also be hosted at a publicly accessible location so that WAF4 can download it when required.
 
 Set this value to the **direct URL** of the hosted updater file.
 
-**Example:**
-
-```text
-https://example.com/files/updator.py
-```
-
-## `USE_REDIRECTOR` and `DIRECT_SERVER_URL`
-
-These options determine how WAF4 locates the admin panel.
+## `USE_REDIRECTOR`
+This options determine how WAF4 locates the admin panel.
 
 ### Using a fixed admin panel URL
+If you are certain that the admin panel will always remain at the same URL, or you are using your custom domain linked with your admin panel then set USE_REDIRECTOR to `false` or `no`.  
 
-If you are certain that the admin panel will always remain at the same URL, set:
-
-```text
-USE_REDIRECTOR = False
-```
-
-Then provide the admin panel URL through `DIRECT_SERVER_URL`.
-
-**Example:**
-
-```text
-DIRECT_SERVER_URL = https://example.com/admin
-```
+Then provide the admin panel URL through `DIRECT_SERVER_URL`. Make sure you are providing permanent URL of admin panel.
 
 > **Important:** If `USE_REDIRECTOR` is disabled and the admin panel URL changes later, existing targets configured with the old URL will no longer be able to locate the admin panel.
 
 ### Using a redirector
-
-If the admin panel URL may change in the future, it is recommended to enable the redirector:
-
-```text
-USE_REDIRECTOR = True
-```
+If the admin panel URL may change in the future, it is recommended to enable the redirector by setting USE_REDIRECTOR to `true` or `yes`.
 
 When enabled, `DIRECT_SERVER_URL` is not used as the primary server location. Instead, WAF4 retrieves the current admin panel URL from the redirector configuration described below.
 
 ## `REDIRECTOR_FILE_HOST_URL`
-
-This value is required when:
-
-```text
-USE_REDIRECTOR = True
-```
+This value is required when USE_REDIRECTOR is enabled.
 
 Set it to the **permanent, publicly accessible URL** of a `servers.json` file.
 
@@ -115,15 +81,7 @@ The file must contain the admin panel URL in the following format:
 }
 ```
 
-**Example:**
-
-```json
-{
-  "url": "https://example.com/admin"
-}
-```
-
-The main advantage of using a redirector is that the admin panel URL can be changed without rebuilding all existing targets.
+The main advantage of using a redirector is that the admin panel URL can be changed without loosing all existing targets.
 
 For example, if the admin panel is moved from:
 
@@ -147,10 +105,9 @@ you only need to update `servers.json`:
 
 As long as the `REDIRECTOR_FILE_HOST_URL` itself remains accessible at the same URL, existing targets can obtain the updated admin panel location.
 
-> **Important:** The redirector file should be hosted at a stable URL. Changing the URL of the `servers.json` file itself would require updating the generated configuration.
+> **Important:** The redirector file should be hosted at a stable URL. Changing the URL of the `servers.json` file require file editing without change in it's access URL.
 
 # Output
-
 After the build completes successfully, all generated files will be placed in the:
 
 ```text
